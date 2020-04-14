@@ -13,12 +13,16 @@
 \newcommand{\bookauthor}{\@author}
 \makeatother
 
+\newcommand{\newterm}[2]{\textit{#1}\index{#2}}
+
 % This utf8 declaration is not needed for versions of latex > 2018 but may
 % be helpful for older software. Eventually it may not be worth keeping.
 \usepackage[utf8]{inputenc}  
-\usepackage{fix-cm}  % this package allows large \fontsize
-\usepackage{tikz}    % this is for graphics. e.g. rectangle on title page
-\usepackage{amsmath} % Used by equations
+\usepackage{hyperref} % clickable links
+\usepackage{fix-cm}   % this package allows large \fontsize
+\usepackage{tikz}     % this is for graphics. e.g. rectangle on title page
+\usepackage{amsmath}  % Used by equations
+\usepackage{hyperref} % clickable links
 
 % The following dimensions specify 4.75" X 7.5" content on 6 3/8" by 9 1/4"
 % paper. The paper width and height can be tweaked as required and the content
@@ -145,30 +149,44 @@ License: \booklicense
 
 % The asterisk excludes chapter from the table of contents.
 \chapter*{Preface}
+% 0000000100000000020000000003000000000400000000050000000006000000000700000000008
 This book was created from a desire to make parsing easier to understand.
-The author struggled to learn a variety of topics in the field parsing.
-It was not that the ideas themselves were particularly difficult, but that
-it required a huge investment in both time and money to acquire, understand,
-and organize the relevant information. After all that effort, it was clear
-that parsing could be explained a lot better, and also that there is a lot
-of existing research, some of it several decades old, that could benefit
-from a wider audience.
+Parsing is an important topic in the field of computer science and the author
+struggled to learn about parsing. It was not that the ideas themselves were
+particularly difficult, but that it required a huge investment of time and some
+money to identify, locate, acquire, organize, and understand the relevant
+information. In many cases, the information presented assumes the reader
+is fluent with set-builder notation\footnote{\url{https://en.wikipedia.org/wiki/Set-builder_notation}}
+and sometimes particular symbols may not be defined because they have been
+used in previous papers on the subject that the reader is assumed to
+have read.
+
+It became clear that it would be a lot easier to learn the subject from a
+book that covers the relevant topics with through explanations. It was
+also clear that there is a lot of existing research, some
+of it several decades old, that could benefit from a wider audience.
+Finally, a good understanding of parsing rests on a good
+understanding of data, which is what a parser acts upon.
 
 \section*{Prior Work}
 Prior to the writing of this book, there were not that many resources for
 learning about parsing that were both freely available and of high-quality.
 There were no more than a handful of books about parsing on the market and
-the most relevant to a general audience was a relatively expensive book about
-compilers. There are also quite a few papers and articles written for academic
-journals which may not be accessible or understandable to a general audience.
+the most relevant to a general scientific audience was a relatively expensive
+book about 
+compilers\footnote{\url{https://en.wikipedia.org/wiki/Compilers:_Principles,_Techniques,_and_Tools}}.
+There are also quite a few papers and articles written for academic
+journals that are written for a narrow audience by use of vocabulary and notation.
 Finally, while there are some good online resources, they are lost within a sea
 of information that is either outdated or poorly produced, or only covers a
 limited set of topics. 
 
-In contrast, the goal of this book is to be accessible and as easy to understand
-as possible. This book is built from the ground up with relevant topics,
-starting from the basics and building up from there, 
-while using a simple and intuitive style of presentation.
+\section*{Design Goals}
+% 0000000100000000020000000003000000000400000000050000000006000000000700000000008
+This book is designed to be as simple to understand as possible. 
+This book is built from the ground up with relevant topics,
+starting from the basics and building up to advanced topics, 
+using a simple and intuitive style of presentation.
 
 Some of the explanations in this book may seem excessively long so it is
 worth noting that keeping explanations short is a much lower priority
@@ -182,6 +200,7 @@ reading and understanding material that is excessively explained.
 This book can serve as an introduction to topics on data and parsing for
 the working software developer or student of computer science. The book
 covers foundational topics of parsing using concrete examples and common
+% 0000000100000000020000000003000000000400000000050000000006000000000700000000008
 tools used in the field. In an academic setting, the book would serve well as
 a companion book for courses that only cover parsing as part of a larger
 topic, such as compiling.
@@ -189,11 +208,29 @@ topic, such as compiling.
 \section*{Uses for this Book}
 The book may also be of interest to you if you are an educator, a blogger,
 or if you are writing a book. This document is licensed under the Creative
-Commons Zero v1.0 Universal license. You are free to copy this content,
+Commons Zero v1.0 Universal 
+license\footnote{\url{https://creativecommons.org/publicdomain/zero/1.0/legalcode}}.
+You are free to copy this content,
 distribute it, include it in your own content, or sell it, and you may do so
-\textit{without attribution}. Just copy what you want and move on.  Read the
-license text at https://creativecommons.org/publicdomain/zero/1.0/legalcode
-for more details.
+\textit{without attribution}. Just copy what you want and move on.
+
+\section*{Terms and Symbols}
+Many of the ideas covered in this book originated in the 1950s and 
+1960s, near the dawn of the computer age. In the decades since,
+researchers and educators have defined quite a few names for various
+concepts surrounding data and parsing. They have also adopted numerous
+symbols and notations as a convenient shorthand to write down their ideas.
+% 0000000100000000020000000003000000000400000000050000000006000000000700000000008
+While it can be tedious to learn (and explain) these names and symbols, it
+is necessary if you want to be able to follow discussions or read
+original research papers on these topics. In some cases, words that you may
+be familiar with in common language may have a different definition in 
+academic papers. This can be confusing if you are not already familiar with
+that term. Therefore, in this book, we will error on the side of explaining
+the academic terms and symbols when they are used. Sometimes it takes a 
+number of definitions conspiring together to explain a larger concept, so
+bear with us if it seems like we are just defining words for no apparent
+reason.
 
 \section*{Prerequisites}
 For the chapters on data, the reader should have a basic knowledge of
@@ -206,11 +243,140 @@ application.
 
 \mainmatter
 
-\chapter{Introduction}
-This book is about data and parsing in the context of computing. Data is
-defined by Wikipedia as any sequence of symbols for which "a specific act of
-interpretation" gives those symbols meaning. Parsing is an act of
-interpreting data based on how it matches structural patterns.
+\chapter{Data}\label{ch.Data}
+
+\section{Symbols}
+% 0000000100000000020000000003000000000400000000050000000006000000000700000000008
+The signs, sounds, marks, and words humans use to represent ideas are called
+\newterm{symbols}{Symbol}. For example, the twenty six letters of
+the English alphabet are symbols representing sounds or parts of words. Words
+are also symbols for the ideas they represent. 
+The numerals 0 through 9 are symbols for numbers.
+As long as something represents, or \textit{symbolizes} something else, 
+it is a symbol. We use symbols as sort of "real world" currency
+to remember or communicate something meaningful to ourselves or others.
+
+\subsection{Interpreting Symbols}
+Wikipedia defines
+\newterm{data}{Data} as any sequence of symbols for which "a specific act of
+interpretation" gives those symbols
+meaning\footnote{\url{https://en.wikipedia.org/wiki/Data\_(computing)}}.
+In other words, the essential nature of data is that is in a
+\newterm{sequence}{Sequence}, which means that the symbols occur one after
+another, and that there is a particular meaning associated with 
+the ordering and choice of the symbols in the data.
+
+\subsection{Manipulating Symbols}
+
+% 0000000100000000020000000003000000000400000000050000000006000000000700000000008
+Computers are well known for their ability to manipulate data.
+A computer can read and \newterm{execute}{Execution}, or follow,
+instructions as represented by a sequence of symbols.
+These instructions can, in
+turn, direct the manipulation of symbols stored in the computer's memory.
+It can be confusing to think of a computer working with the kind of visual
+symbols that humans typically think of like a + (plus) sign or the numeral 2,
+and that would be because they do not actually work directly with those
+kinds of symbols.
+The symbols that a computer can read, follow, and manipulate are quite limited.
+In fact at the lowest levels, there are only two symbols. Inside the computer,
+these symbols exist as electrical states inside the transistors and wires of 
+the computer. From an electrical perspective, we think of these states as 
+\textit{off} and \textit{on}, but from a numerical perspective these states 
+symbolize 0 and 1, respectively.
+
+\section{Binary Data}\label{bindata}
+\subsection{Bits}
+A numerical symbol which is either 0 or 1 is known as a
+\newterm{binary digit}{Binary Digit}, or \newterm{bit}{Bit} for short.
+At the most fundamental level, bits are the letters of a very simple
+alphabet that both humans and computers can manipulate in an
+equivalent way. For example, both humans and computers are capable 
+of numerically adding together the symbols 1 and 0 to produce the 
+symbol 1. It is through these common definitions and ways of processing
+symbols that computers can perform computations
+that are relevant to humans.
+
+% 0000000100000000020000000003000000000400000000050000000006000000000700000000008
+\subsection{Binary Codes}
+Since computers are only able to manipulate sequences of bits, we
+have devised an incredibly rich variety of ways, known as 
+\newterm{codes}{Codes}\footnote{\url{https://en.wikipedia.org/wiki/Code}}
+to map the information available to us into sequences of ones and zeros. For
+example, \newterm{decimal}{Decimal}\footnote{\url{https://en.wikipedia.org/wiki/Decimal}} 
+numbers, which are the standard numbers we use from day to day, can be converted
+to a binary number composed of binary digits, using a
+\newterm{binary code}{Binary Code} as seen in Table 1.1.
+
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{||c|c||}
+    \hline
+    Number & Bits\\
+    \hline\hline
+     0 & 000 \\
+     \hline
+     1 & 001 \\
+     \hline
+     2 & 010 \\
+     \hline
+     3 & 011 \\
+     \hline
+     4 & 100 \\
+     \hline
+     5 & 101 \\
+     \hline
+     6 & 110 \\
+     \hline
+     7 & 111 \\
+     \hline
+\end{tabular}
+\caption{Mapping of Numbers to Bits}
+\end{table}
+
+\subsection{Nibbles}
+A \newterm{nibble}{Nibble} is four bits.
+
+\subsection{Hexadecimal}
+Hexadecimal is a numerical encoding that allows the use of
+16 different symbols for each digit, 0 through 9 and A through F.
+Each symbol encodes 4 bits of a binary number.
+
+\subsection{Bytes and Octets}
+A \newterm{byte}{Byte} is typically 8 bits. An \newterm{octet}{Octet} is 
+always 8 bits.
+
+% 0000000100000000020000000003000000000400000000050000000006000000000700000000008
+\subsection{Exercises for Section \ref{bindata}}\label{ex.bindata}
+
+\noindent\textbf{Exercise \ref{ex.bindata}.1}: Write the numbers 8 through 15
+using 4 bits.
+
+\medskip\noindent
+\textbf{Exercise \ref{ex.bindata}.2}: Create a mapping from the numbers 0
+through 8 to two digits of the three symbols 0, 1, and 2.
+
+\section{Character Encodings}
+Characters are symbols that represent sounds or parts of words.
+
+\subsection{ASCII}
+
+\subsection{Terminals and Control Characters}
+
+\subsection{Locales}
+
+\subsection{Unicode}
+The Unicode\textcircled{r} Standard is a universal character encoding standard for all written characters and text.
+
+\section{Summary of Chapter \ref{ch.Data}}
+
+\chapter{Parsing}
+
+% 0000000100000000020000000003000000000400000000050000000006000000000700000000008
+\newterm{Parsing}{Parsing} as a way of interpreting data based on how it matches
+\newterm{structural patterns}{Structural Patterns}, such as a
+\newterm{formal grammar}{Formal Grammar}\index{Grammar}. 
 
 \backmatter
 \addcontentsline{toc}{chapter}{Index}
