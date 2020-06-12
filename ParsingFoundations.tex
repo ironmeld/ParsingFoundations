@@ -1,5 +1,9 @@
 \documentclass{book}
 
+% The following comment is interspersed throughout the document to help maintain
+% a column limit of 80 characters while editing. It can be ignored.
+% 0000000100000000020000000003000000000400000000050000000006000000000700000000008
+
 \title{Parsing Foundations}
 \newcommand{\booksubtitle}{A Study of Data and Parsing}
 \newcommand{\booklicense}{Creative Commons Zero 1.0 Universal}
@@ -18,11 +22,10 @@
 % This utf8 declaration is not needed for versions of latex > 2018 but may
 % be helpful for older software. Eventually it may not be worth keeping.
 \usepackage[utf8]{inputenc}  
-\usepackage{hyperref} % clickable links
+\usepackage{hyperref} % \url tag and clickable links
 \usepackage{fix-cm}   % this package allows large \fontsize
 \usepackage{tikz}     % this is for graphics. e.g. rectangle on title page
 \usepackage{amsmath}  % Used by equations
-\usepackage{hyperref} % clickable links
 
 % The following dimensions specify 4.75" X 7.5" content on 6 3/8" by 9 1/4"
 % paper. The paper width and height can be tweaked as required and the content
@@ -42,7 +45,10 @@
 \usepackage{makeidx}
 \makeindex % Initialize an index so we can add entries with \index
 
-% Content Starts Here
+% 0000000100000000020000000003000000000400000000050000000006000000000700000000008
+%
+%     Beginning of Document
+%
 \begin{document}
 \frontmatter
 
@@ -52,13 +58,13 @@
 \begin{titlepage}
 \begin{flushleft}
 
-% Title
+% Title of Book
 \textbf{\fontfamily{qcs}\fontsize{48}{54}\selectfont Parsing\\Foundations\\}
 
 % Draw a line 4pt high
 \par\noindent\rule{\textwidth}{4pt}\\
 
-% Subtitle
+% Subtitle of Book
 % Shaded box from left to right. Text node is midway (centered).
 \begin{tikzpicture}
 \shade[bottom color=lightgray,top color=white]
@@ -90,7 +96,7 @@
 \begin{titlepage}
 \begin{flushleft}
 
-% Title
+% Title of Book
 \textbf{\fontfamily{qcs}\fontsize{48}{54}\selectfont Parsing\\Foundations\\}
 
 % Draw a line 4pt high
@@ -147,54 +153,46 @@ License: \booklicense
 % was actually page 3. So add two to page counter.
 \addtocounter{page}{2}
 
+% 0000000100000000020000000003000000000400000000050000000006000000000700000000008
+%
+% CHAPTER: Preface
+%
+
 % The asterisk excludes chapter from the table of contents.
 \chapter*{Preface}
-% 0000000100000000020000000003000000000400000000050000000006000000000700000000008
-This book was created from a desire to make parsing easier to understand.
-Parsing is an important topic in the field of computer science and the author
-struggled to learn about parsing. It was not that the ideas themselves were
-particularly difficult, but that it required a huge investment of time and some
-money to identify, locate, acquire, organize, and understand the relevant
-information. In many cases, the information presented assumes the reader
-is fluent with set-builder notation\footnote{\url{https://en.wikipedia.org/wiki/Set-builder_notation}}
-and sometimes particular symbols may not be defined because they have been
-used in previous papers on the subject that the reader is assumed to
-have read.
+Parsing is an important and well-established area within the field
+of software development and nearly every programmer can benefit 
+from a solid understanding of parsing. 
 
-It became clear that it would be a lot easier to learn the subject from a
-book that covers the relevant topics with through explanations. It was
-also clear that there is a lot of existing research, some
-of it several decades old, that could benefit from a wider audience.
-Finally, a good understanding of parsing rests on a good
+There is an enormous amount of information on the topic of parsing.
+However, it requires a serious investment of time 
+(and often times some money) to 
+identify, locate, acquire, organize, and understand the books, papers, 
+and online resources that will help you gain a solid 
+understanding of the relevant issues. 
+This book was written to help the reader navigate this large body of
+information. There is also a significant 
+amount of useful research which has been around
+for several decades but has been hidden in obscurity, and so
+a goal of this book is to present this research to a wider audience.
+
+This book does not assume that the reader is an expert with set-builder 
+notation\footnote{\url{https://en.wikipedia.org/wiki/Set-builder_notation}}
+or category theory
+or that the reader is familiar with specific mathematical symbols
+that have been used in previous papers on the subject.
+Thorough explanations are preferred over terse explanations.
+
+This book starts with a thorough explanation of data because
+a good understanding of parsing rests on a good
 understanding of data, which is what a parser acts upon.
 
-\section*{Prior Work}
-Prior to the writing of this book, there were not that many resources for
-learning about parsing that were both freely available and of high-quality.
-There were no more than a handful of books about parsing on the market and
-the most relevant to a general scientific audience was a relatively expensive
-book about 
-compilers\footnote{\url{https://en.wikipedia.org/wiki/Compilers:_Principles,_Techniques,_and_Tools}}.
-There are also quite a few papers and articles written for academic
-journals that are written for a narrow audience by use of vocabulary and notation.
-Finally, while there are some good online resources, they are lost within a sea
-of information that is either outdated or poorly produced, or only covers a
-limited set of topics. 
-
-\section*{Design Goals}
-% 0000000100000000020000000003000000000400000000050000000006000000000700000000008
-This book is designed to be as simple to understand as possible. 
-This book is built from the ground up with relevant topics,
-starting from the basics and building up to advanced topics, 
-using a simple and intuitive style of presentation.
-
-Some of the explanations in this book may seem excessively long so it is
-worth noting that keeping explanations short is a much lower priority
-for this book than providing a thorough explanation. The idea is that far
-more time is wasted by avoiding difficult material, skimming it repeatedly,
-and finally focusing your mind enough to understand it, than is wasted
-reading and understanding material that is excessively explained.
-
+This document is licensed under the Creative
+Commons Zero v1.0 Universal 
+license\footnote{\url{https://creativecommons.org/publicdomain/zero/1.0/legalcode}}.
+That means you are free to copy this content,
+distribute it, include it in your own content, or sell it, and you may do so
+\textit{without attribution}. Just copy what you want and move on.
 
 \section*{Audience}
 This book can serve as an introduction to topics on data and parsing for
@@ -205,14 +203,55 @@ tools used in the field. In an academic setting, the book would serve well as
 a companion book for courses that only cover parsing as part of a larger
 topic, such as compiling.
 
-\section*{Uses for this Book}
-The book may also be of interest to you if you are an educator, a blogger,
-or if you are writing a book. This document is licensed under the Creative
-Commons Zero v1.0 Universal 
-license\footnote{\url{https://creativecommons.org/publicdomain/zero/1.0/legalcode}}.
-You are free to copy this content,
-distribute it, include it in your own content, or sell it, and you may do so
-\textit{without attribution}. Just copy what you want and move on.
+\section*{Prior Work}
+Prior to the writing of this book there were no public domain 
+books on parsing.
+
+While there are quite a few papers and articles written for academic
+journals, these articles are typically written for a narrow audience 
+by use of vocabulary and notation.
+Also, many important papers on parsing are not freely available; one must
+purchase a copy in order to read it, or have access to a very good library.
+Finally, while there are some good online resources such as the work of
+Federico Tomassetti et al, they are lost within a sea of information that
+is either outdated or poorly produced, or only covers a limited set of topics.
+
+The following is a list of commercially published books that the author has been 
+able to review. 
+
+\begin{enumerate}
+    \item Dick Grune, Ceriel J.H. Jacobs\\
+    Parsing Techniques, A Practical Guide, Second Edition, 2008
+
+    This is the best book focused on parsing for the general audience.
+
+    \item Alfred V. Aho, Monica S. Lam, Ravi Sethi, Jeffrey D. Ullman\\
+    Compilers: Principles, Techniques, and Tools, Second Edition, 2007
+
+    This is a very popular book that covers lexing, parsing, and compilation.
+    The chapters on lexing are particularly good, covering DFA construction.
+    This book is commonly known as the "Dragon Book" due to the illustration on the cover.
+
+    \item S. Sippu, E. Soisalon-Soininen\\
+    Parsing Theory, 1988
+
+    This book describes parsing in terms of category theory and is appropriate for
+    students who have taken graduate level classes in mathematics.
+
+    \item Nigel P. Chapman\\
+    LR Parsing, Theory and Practice, 1987
+
+    This book describes parsing in the language of mathematics and is appropriate
+    for students who have taken undergraduate level classes in mathematics.
+    
+    \item John-Paul Tremblay, Paul G. Sorenson\\
+    The Theory and Practice of Compiler Writing, 1985
+
+    \item William A. Barrett, John D. Couch\\
+    Compiler Construction: Theory and Practice, 1979
+\end{enumerate}
+
+
 
 \section*{Terms and Symbols}
 Many of the ideas covered in this book originated in the 1950s and 
@@ -237,13 +276,445 @@ For the chapters on data, the reader should have a basic knowledge of
 computers, such as knowing about a monitor, mouse, disk, file, and an
 application.
 
-% Three-level Table of Contents
-\setcounter{tocdepth}{3}
+% Four-level Table of Contents
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{4}
 \tableofcontents
 
 \mainmatter
 
+
+
+% 0000000100000000020000000003000000000400000000050000000006000000000700000000008
+%
+% CHAPTER: Parsing Concepts
+%
+\chapter{Parsing Concepts}\label{chpar}
+
+\section{Strings}
+
+\section{Languages}
+
+% 0000000100000000020000000003000000000400000000050000000006000000000700000000008
+\section{Grammars}
+
+\subsection{Terminals and Tokens}
+Terminals are typically referred to as tokens in practice. Technically, a
+terminal is just a language element, while a token typically contains
+additional information about the context in which the element was recognized.
+
+\subsection{Nonterminals}
+Nonterminals are often referred to as variables.
+
+\subsection{Productions}
+A production is a rule that map a nonterminal 
+to a sequence of terminals.
+
+\section{Parse Trees}
+
+\subsection{Concrete Syntax Tree}
+A tree that accurately reflects the grammar that produced it.
+
+\subsection{Abstract Syntax Tree}
+This is a parse tree that is abstraction of a concrete (or grammar-based) parse tree
+in order to be independent of the grammar that produced it.
+
+
+\subsection{Document Parsing}
+\begin{verbatim}
+parse_tree = parse(input)
+\end{verbatim}
+
+\subsection{Stream Parsing}
+\begin{verbatim}
+for event in parse(input):
+    handle_event(event)
+\end{verbatim}
+
+For bottom up parsing, events are produced as wholly formed subtrees are recognized.
+For top down parsing, events are produced for creation of the root node, and 
+for children of a previously parsed node.
+
+\subsection{Incremental Parsing}
+Parse trees are needed for incremental parsing:
+\begin{verbatim}
+reparse(old_parse_tree, text_delta)
+\end{verbatim}
+\url{https://channel9.msdn.com/Blogs/Seth-Juarez/Anders-Hejlsberg-on-Modern-Compiler-Construction}
+
+
+\section{Parsing Applications}
+There are important differences between parsing 
+data files versus parsing computer languages.
+
+\section{Parsing Software}
+There are handwritten and generated parsers.
+
+\chapter{Lexers}
+
+\section{The Role of the Lexer}
+
+Lexemes and Tokens\\
+
+Why do lexing independently from parsing?
+
+Wirth, in Compiler Construction, states
+
+"A partitioning of the compilation process into as many parts as possible was the predominant
+technique until about 1980, because until then the available store was too small to
+accommodate the entire compiler"
+
+A pipeline supports separation of concerns and allows reuse of a lexer
+with other parsers that accept a stream of tokens.
+
+\url{https://rosettacode.org/wiki/Compiler/lexical_analyzer}\\
+\url{https://rosettacode.org/wiki/Compiler/Sample_programs} 
+
+
+\subsection{Lexers, Tokenizers, and Scanners}
+The simplistic view is these are all the same.
+The more nuanced view is that there are distinctions between
+these words that can be helpful.
+
+A \newterm{lexer}{Lexer} is software that takes data as input and outputs 
+tokens, (i.e. it acts as a tokenizer) using a
+scanner to process the input data.
+
+
+\subsection{Scannerless Parsing}
+
+The concept of \newterm{scannerless parsing}{Scannerless Parsing} was formalized
+by Salomon and Cormack in "Scannerless nslr(1) parsing of programming languages" July 1989
+It may not be immediately clear why simply \textit{not} using a scanner
+is an idea being discussed in the year 1989. If you read Knuth's 1965 paper on
+LR parsing, there is no mention of scanning. One would presume that the lack
+of a scanner was a normal thing. When Knuth discusses parsing a string such 
+as $abcde$ it his paper, he presumes each of those letters is a separate 
+terminal. Apparently, there is no scanner. But strictly speaking, his 
+paper was simply agnostic about the nature of the 
+terminals such as how they were created or whether they "contain" information
+or structure, such as a sequence of characters. The parsing process
+he describes presumes the input string is composed of a pure sequence 
+of atomic elements.
+
+In practice, however, a scanner was typically used because it
+allows the resulting grammar to be much simpler than a grammar
+in which every character is a terminal. A simpler grammar can
+be parsed with a simpler parser, which is an essential benefit
+of using a scanner.
+
+\section{Scanning}
+
+\subsection{Input Data}
+
+\subsection{Rules for Tokens}
+
+\subsection{Literals}
+
+\subsection{Regular Expressions}
+
+\subsection{Pseudo-Tokens}
+
+\subsection{Context-Free and Context-Aware Scanning}
+
+
+\section{Scanner Conflicts}
+
+When two different token rules match the same string, that is a
+\newterm{scanner conflict}{Scanner Conflict}.
+
+
+\subsection{Traditional Lexer Precedence}
+A \newterm{traditional lexer}{Traditional Lexer} resolves
+conflicts between tokens using 
+\newterm{traditional lexical precedence}{Traditional Lexical Precedence}
+as defined by [Denny, Def 2.2.6] and repeated here.
+
+Traditional lexers have been context-free lexers. They also
+resolve conflicts using the 
+\newterm{longest match}{Longest Match} rule first,
+followed by \newterm{positional priority}{Positional Priority}
+as described in the next two sections, respectively.
+
+\subsubsection{Longest Match Rule}
+
+\subsubsection{Positional Priority}
+
+\subsection{Longest Match Conflict}
+A longest match conflict occurs when a token chosen by
+a traditional lexer leads to an error state in the lexer
+or parser, whereas if a different token, such as a shorter
+one was chosen, the parse would succeed.
+
+For example, 1..10
+
+If 1 and 1. are valid tokens (for integers and floating point numbers),
+then these sequences are valid:
+\begin{verbatim}
+(1.) (.10)
+(1) (..) (10)
+\end{verbatim}
+
+Longest match favors the first sequence, but that token sequence
+is invalid to the parser, but the second sequence is valid.
+
+The presence of this problem is a combination of:
+\begin{itemize}
+    \item
+    The traditional lexical and grammatical model cannot express
+this language without special handling.
+    \item    Trying to use or design a language that requires this
+special handling
+\end{itemize}
+
+
+For example, scannerless parsing with an LR parsing algorithm 
+will be able to parse this string. Therefore, one might argue
+that the burden is on the parsing software to handle this issue.
+The counterargument is that the language designer can avoid
+this issue by being thoughtful of it during the design process
+and verifying that these conflicts do not exist using proper
+tools.
+
+(Check to see whether lex's lookahead operator can solve this.
+this would work if the length used for longest match rule includes
+the lookahead string (seems unlikely but who knows))
+
+Assuming you are using traditional scanning software,
+a strategy for handling longest match conflicts, 
+which makes the grammar less portable between various parsing tools.
+
+\subsection{Context-Invasive Token Conflicts}
+A scanner conflict that only occurs because a
+token is active that is not associated with the
+current parsing context is given the name
+\newterm{context-invasive conflict}{Context-invasive Token Conflict}
+in this book.
+
+\subsection{Resolving Lexical Conflicts}
+\subsubsection{Lexical Modes}
+Lexical modes are a tool for resolving lexical conflicts
+by creating separate sets of active tokens.
+
+\subsubsection{Lexical Lookahead Operator}
+A lexical lookahead operator can specify a required
+pattern to follow a lexeme in order to match the token.
+This pattern is not included in the lexeme.
+
+
+\subsubsection{Lexical Predicates}
+A lexical predicate is arbitrary code that runs in order
+to determine whether to match the token.
+
+\subsubsection{Match Multiple Tokens}
+
+\subsection{Academic History of Token Conflicts}
+
+Token conflicts were first formalized by Nawrocki in 1991.
+
+
+Keynes:\\
+
+universal quantified predicate (text p. 5, pdf p. 11)\\
+\url{http://www.open-std.org/jtc1/sc22/open/n3187.pdf}\\
+
+set comprehension term p. 20\\
+\url{https://www.cs.ox.ac.uk/files/3389/PRG68.pdf}\\
+
+Denny
+
+
+
+
+% 0000000100000000020000000003000000000400000000050000000006000000000700000000008
+%
+% CHAPTER: Parsing Algorithms
+%
+\chapter{Parsing Algorithms}
+
+\section{Left-to-Right Parsing}
+
+\section{Left and Right Derivations}
+
+\section{Top-down Parsing}
+This produces a left-most derivation.
+
+\section{Bottom-up Parsing}
+This produces a right-most derivation.
+
+
+\section{Parsing Families}
+
+\section{The LL Parsing Family}
+\section{The LR Parsing Family}
+\section{CYK Parsing}
+\section{Early Parsing}
+\section{PEG Parsing}
+\section{Parser Combinators}
+
+
+% 0000000100000000020000000003000000000400000000050000000006000000000700000000008
+%
+% CHAPTER: LL Parsing
+%
+\chapter{LL Parsing}
+\section{LL Table Structure}
+\section{LL Table Building}
+\section{ALL Parsing}
+\section{GLL Parsing}
+
+
+% 0000000100000000020000000003000000000400000000050000000006000000000700000000008
+%
+% CHAPTER: LR Parsing
+%
+\chapter{LR Parsing}
+
+
+\section{LR Table Structure}
+\section{LR Table Building}
+
+\subsection{LR Table Conflicts}
+\subsection{Avoiding LR Table Conflicts}
+\subsection{Resolving LR Table Conflicts}
+
+\section{SLR(0) Parsing}
+
+\section{Canonical LR(1) Parsing}
+Uncompressed, not large. "Large" is a carryover from a time
+when an LR table challenged memory resources of a 
+typical computer. The difference now, between 100K and 1M
+is not much. In the 1980's, that could have meant much more.
+
+
+\section{LALR Parsing}
+\section{Minimal LR Parsing}
+\section{GLR Parsing}
+
+% 0000000100000000020000000003000000000400000000050000000006000000000700000000008
+%
+% CHAPTER: Indentation-Sensitive Parsing
+%
+\chapter{Indentation-Sensitive Parsing}
+
+\section{Indentation-Sensitive Languages}
+Python, YAML, and Haskell are indentation sensitive.
+
+\section{Parsing Indented Blocks}
+\subsection{Grammar Annotations}
+
+\subsubsection{Grammar terms annotated with Counts}
+Indentation Sensitive Languages\\
+2006 Leonhard Brunauer, Bernhard Muhlbacher\\
+\url{https://www.google.com/search?q=LeonhardBrunauer+and+Bernhard+M%C3%BChlbacher.+Indentation+sensitive+languages}
+
+The scheme allows a specific character to be matched a specified number of times.
+
+For example, a tab character, represented by $\rightarrow$, can be repeated $m$ 
+times in a grammar with this syntax:\\
+$C_\rightarrow^m$
+
+This rule states the start variable expands to zero tabs followed by a statement:\\
+$S\rightarrow C_\rightarrow^0 Statement$
+
+This rule states that the statement after an
+"if" condition has greater indentation:\\
+$C_\rightarrow^m Statement \rightarrow C_\rightarrow^m \: "if" \: Condition \: ":" \: newline \: C_\rightarrow^{m+1} Statement$
+
+\begin{verbatim}
+if true:
+    a=1
+\end{verbatim}
+
+
+\subsubsection{Relationship Annotated BNF}
+Principled Parsing for Indentation-Sensitive Languages 2013\\
+\url{https://michaeldadams.org/papers/layout_parsing/LayoutParsing.pdf}
+
+
+
+\subsection{Explicit Indent Checking?}
+
+\subsubsection{GLR Filtering}
+Layout-Sensitive Generalized Parsing\\
+Erdweg S., Rendel T., Kästner C., Ostermann K. (2013) Layout-Sensitive Generalized Parsing. In: Czarnecki K., Hedin G. (eds) Software Language Engineering. SLE 2012. Lecture Notes in Computer Science, vol 7745. Springer, Berlin, Heidelberg
+
+\subsubsection{Data-Dependent Grammars}
+Ch. 3: "In this chapter we propose a parsing framework that embraces context information in its core."\\
+\url{https://homepages.cwi.nl/~jurgenv/papers/PhDThesis_Ali_Afroozeh_and_Anastasia_Izmaylova.pdf}\\
+align and offside keywords desugared to data-dependent expressions (section 3.3.5)
+
+\subsection{PEG Semantic Predicates}
+\url{https://gist.github.com/dmajda/04002578dd41ae8190fc}\\
+Note that the 'I' provides an explicit token indicating that indentation is coming so this doesn't really work
+for arbitrary indentation like YAML.
+
+\subsection{Pseudo-Tokens and Pseudo-Grammars}
+\subsubsection{Implicit Current Indentation}
+\subsubsection{Explicit Current Indentation}
+
+\section{Parsing Flow-Style Lists}
+
+\section{Parsing Blank Lines in Indented Blocks}
+
+
+
+% 0000000100000000020000000003000000000400000000050000000006000000000700000000008
+%
+% CHAPTER: Constructing a Parser
+%
+\chapter{Constructing a Parser}
+You can hand write a parser or use a parser generator to automatically
+generate a parser
+PEG is typically partially handwritten and partially generated.
+
+\section{Handwritten Parsers}
+
+\section{Parser Generators}
+
+
+% 0000000100000000020000000003000000000400000000050000000006000000000700000000008
+%
+% CHAPTER: A Model Data Parser
+%
+\chapter{A Model Data Parser}
+
+\section{Design Choices}
+
+\appendix
+
+% 0000000100000000020000000003000000000400000000050000000006000000000700000000008
+%
+% Appendix: Data
+%
 \chapter{Data}\label{ch.Data}
+
+\section{Motivation}
+This book covers the topic of data because a parser
+operates on data, and there are important issues to be
+aware of with a common form of data called Unicode.
+These issues are listed at the beginning of this chapter
+in order to motivate the reader to explore these topics
+further in detail.
+The rest of the chapter is written to give the reader a
+full understanding of these issues, from the ground up,
+so that the reader can be confident that they have dealt
+with them appropriately when they arise in the context of
+parsing or any other context.
+
+The first issue is that there are some symbols in the Unicode standard
+which have multiple definitions. This can lead to potential
+problems if this issue is not accounted for properly. For example,
+it requires a strategy for determining whether two names, for
+example, are the same. Another set of issues arise because it may
+be unclear what one means by the \textit{length} of a sequences
+of symbols.
+
+These issues with Unicode are typically either not well known or not 
+understood by both the users and developers of parsing software.
+When the strategy for handling these questions is left undocumented
+there is risk that software will behave in an unexpected way, 
+potentially leading to serious consequences.
 
 \section{Symbols}
 % 0000000100000000020000000003000000000400000000050000000006000000000700000000008
@@ -274,16 +745,15 @@ A computer can read and \newterm{execute}{Execution}, or follow,
 instructions as represented by a sequence of symbols.
 These instructions can, in
 turn, direct the manipulation of symbols stored in the computer's memory.
-It can be confusing to think of a computer working with the kind of visual
+It would be confusing to think of a computer working with the kind of visual
 symbols that humans typically think of like a + (plus) sign or the numeral 2,
-and that would be because they do not actually work directly with those
-kinds of symbols.
+because they do not actually work directly with those kinds of symbols.
 The symbols that a computer can read, follow, and manipulate are quite limited.
 In fact at the lowest levels, there are only two symbols. Inside the computer,
 these symbols exist as electrical states inside the transistors and wires of 
-the computer. From an electrical perspective, we think of these states as 
-\textit{off} and \textit{on}, but from a numerical perspective these states 
-symbolize 0 and 1, respectively.
+the computer. In an electric model, we think of these states
+as  \textit{off} and \textit{on} and by convention these states symbolize the
+numbers 0 and 1, respectively.
 
 \section{Binary Data}\label{bindata}
 \subsection{Bits}
@@ -293,7 +763,8 @@ At the most fundamental level, bits are the letters of a very simple
 alphabet that both humans and computers can manipulate in an
 equivalent way. For example, both humans and computers are capable 
 of numerically adding together the symbols 1 and 0 to produce the 
-symbol 1. It is through these common definitions and ways of processing
+symbol 1, although they go about it in different ways. It is 
+through these common definitions and ways of processing
 symbols that computers can perform computations
 that are relevant to humans.
 
@@ -301,11 +772,11 @@ that are relevant to humans.
 \subsection{Binary Codes}
 Since computers are only able to manipulate sequences of bits, we
 have devised an incredibly rich variety of ways, known as 
-\newterm{codes}{Codes}\footnote{\url{https://en.wikipedia.org/wiki/Code}}
-to map the information available to us into sequences of ones and zeros. For
-example, \newterm{decimal}{Decimal}\footnote{\url{https://en.wikipedia.org/wiki/Decimal}} 
+\newterm{codes}{Codes}\footnote{\url{https://en.wikipedia.org/wiki/Code}} to map
+the information available to us into sequences of ones and zeros. For example,
+\newterm{decimal}{Decimal}\footnote{\url{https://en.wikipedia.org/wiki/Decimal}} 
 numbers, which are the standard numbers we use from day to day, can be converted
-to a binary number composed of binary digits, using a
+to a \newterm{binary number}{Binary Number} composed of binary digits, using a
 \newterm{binary code}{Binary Code} as seen in Table 1.1.
 
 
@@ -313,7 +784,7 @@ to a binary number composed of binary digits, using a
 \centering
 \begin{tabular}{||c|c||}
     \hline
-    Number & Bits\\
+    Decimal & Binary\\
     \hline\hline
      0 & 000 \\
      \hline
@@ -332,20 +803,109 @@ to a binary number composed of binary digits, using a
      7 & 111 \\
      \hline
 \end{tabular}
-\caption{Mapping of Numbers to Bits}
+\caption{Map of Decimal Digits to Binary Digits}
 \end{table}
 
-\subsection{Nibbles}
-A \newterm{nibble}{Nibble} is four bits.
-
-\subsection{Hexadecimal}
-Hexadecimal is a numerical encoding that allows the use of
-16 different symbols for each digit, 0 through 9 and A through F.
-Each symbol encodes 4 bits of a binary number.
-
 \subsection{Bytes and Octets}
-A \newterm{byte}{Byte} is typically 8 bits. An \newterm{octet}{Octet} is 
-always 8 bits.
+A \newterm{byte}{Byte} is typically 8 bits. A byte also
+represents the smallest unit of a computer's memory that
+is \textit{addressable} by location. Computer systems store and 
+retrieve bytes of data in 
+specific locations of the computer's memory and these locations are 
+identified using a number, called a
+\newterm{memory address}{Memory Address}.
+There are
+examples of old computers that had more or less bits but it is
+standard now to assume a byte has 8 bits. In some contexts, such
+as with networking standards, the term \newterm{octet}{Octet} may be used
+instead of byte if there is a concern that the definition of a byte
+is ambiguous.
+
+\subsection{Base-N Number Systems}
+People typically communicate using numbers which are split into digits
+based on the number ten. This is called the 
+\newterm{decimal numeral system}{Decimal Numeral System} 
+When a digit exceeds nine, another digit to the left represents ten
+times the current digit. Further digits can be added to represent 
+higher numbers based on powers of ten. Numbers in the decimal number 
+system are also called \newterm{base-10}{Base-10} numbers.
+
+With binary numbers however, when a digit exceeds \textit{one},
+another digit is added to the left that represents \textit{twice}
+the current digit. Binary numbers
+are based on powers of two and are called \newterm{base-2}{Base-2} numbers.
+
+In addition to these number systems, two other systems are commonly
+used with computer systems, called \newterm{hexadecimal}{Hexadecimal} 
+and \newterm{octal}{Octal} numbers which
+are base-16 and base-8 numbers respectively. 
+
+\subsection{Octal Notation}
+Octal is a numerical encoding that allows the use of
+8 different symbols for each digit, 0 through 7.
+Each symbol encodes 3 bits of a binary number.
+
+
+\subsection{Hexadecimal Notation}
+Hexadecimal is a numerical encoding that allows the use of
+16 different symbols for each digit, 0 through 9 and A through F. Lowercase
+letters are also used but mixing upper and lowercase letters is uncommon.
+Each symbol encodes 4 bits, or a nibble, of a binary number.
+Hexadecimal numbers are
+convenient because you can always represent one byte with only two digits.
+
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{||c|c|c|c|c|c||}
+    \hline
+    Decimal & Binary & Octal & Hexadecimal\\
+    \hline\hline
+     0 & 0 & 0 & 0\\
+     \hline
+     1 & 1 & 1 & 1\\
+     \hline
+     2 & 10 & 2 & 2\\
+     \hline
+     3 & 11 & 3 & 3\\
+     \hline
+     4 & 100 & 4 & 4\\
+     \hline
+     5 & 101 & 5 & 5\\
+     \hline
+     6 & 110 & 6 & 6\\
+     \hline
+     7 & 111 & 7 & 7\\
+     \hline
+     8 & 1000 & 10 & 8\\
+     \hline
+     9 & 1001 & 11 & 9\\
+     \hline
+     10 & 1010 & 12 & A\\
+     \hline
+     11 & 1011 & 13 & B\\
+     \hline
+     12 & 1100 & 14 & C\\
+     \hline
+     13 & 1101 & 15 & D\\
+     \hline
+     14 & 1110 & 16 & E\\
+     \hline
+     15 & 1111 & 17 & F\\
+     \hline
+     16 & 10000 & 18 & 10\\
+     \hline
+     17 & 10001 & 19 & 11\\
+     \hline
+     18 & 10010 & 20 & 12\\
+     \hline
+     19 & 10011 & 21 & 13\\
+     \hline
+\end{tabular}
+\caption{Numbers in Various Numeric Notations}
+\end{table}
+
+
 
 % 0000000100000000020000000003000000000400000000050000000006000000000700000000008
 \subsection{Exercises for Section \ref{bindata}}\label{ex.bindata}
@@ -361,22 +921,33 @@ through 8 to two digits of the three symbols 0, 1, and 2.
 Characters are symbols that represent sounds or parts of words.
 
 \subsection{ASCII}
+An early standard character encoding was ASCII, which stands for
+American Standard Code for Information Interchange.
 
-\subsection{Terminals and Control Characters}
+\subsection{Terminal Control Characters}
+A computer terminal is composed of a display monitor for displaying
+characters to humans and a keyboard to send characters to the
+computer. These characters are displayed in rows and columns.
 
-\subsection{Locales}
+Control characters were invented in order to control terminal 
+operations using character codes, such as sending a character code
+to go to the next line. Character codes are still supported, although
+many of them are outdated.
 
-\subsection{Unicode}
-The Unicode\textcircled{r} Standard is a universal character encoding standard for all written characters and text.
+\subsection{Unicode and UTF-8}
+The Unicode\textcircled{r} Standard is a universal character
+encoding standard for all written characters and text.
+
+\subsubsection{Codepoints}
+
+\subsubsection{Graphemes}
+
+
+\subsubsection{Unicode Normalization}
+Unicode Normalization is a process used to resolve ambiguities in the
+Unicode Standard.
 
 \section{Summary of Chapter \ref{ch.Data}}
-
-\chapter{Parsing}
-
-% 0000000100000000020000000003000000000400000000050000000006000000000700000000008
-\newterm{Parsing}{Parsing} as a way of interpreting data based on how it matches
-\newterm{structural patterns}{Structural Patterns}, such as a
-\newterm{formal grammar}{Formal Grammar}\index{Grammar}. 
 
 \backmatter
 \addcontentsline{toc}{chapter}{Index}

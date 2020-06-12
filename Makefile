@@ -19,6 +19,8 @@ $(MAINTEX)-letter.pdf: $(MAINTEX).tex $(MAINTEX).ist booksvg.pdf
 	sed -i 's/^\([ ]*left=\)/% \1/' $(MAINTEX)-letter.tex
 	sed -i 's/^\([ ]*bottom=\)/% \1/' $(MAINTEX)-letter.tex
 	sed -i 's/^\([ ]*paperwidth=\)/% \1/' $(MAINTEX)-letter.tex
+	# Comment out hide links, we want to see them on the screen.
+	sed -i 's/\(\\hypersetup{hidelinks\)/% \1/' $(MAINTEX)-letter.tex
 	# Create an index stye
 	cp $(MAINTEX).ist $(MAINTEX)-letter.ist
 	latexmk -pdf $(MAINTEX)-letter.tex
