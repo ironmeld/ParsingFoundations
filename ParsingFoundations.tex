@@ -8,7 +8,7 @@
 \newcommand{\booksubtitle}{A Study of Data and Parsing}
 \newcommand{\booklicense}{Creative Commons Zero 1.0 Universal}
 
-\author{Richard R. Masters}
+\author{Anonymous}
 \newcommand{\authorsubtitle}{Seattle, WA}
 
 % Create convenient commands \booktitle and \bookauthor
@@ -77,7 +77,6 @@
 \Large Unfinished Draft of First Edition
 \end{flushright}
 
-% \vspace{\fill}
 \vspace{\fill}
 
 \end{flushleft}
@@ -178,14 +177,10 @@ a goal of this book is to present this research to a wider audience.
 
 This book does not assume that the reader is an expert with set-builder 
 notation\footnote{\url{https://en.wikipedia.org/wiki/Set-builder_notation}}
-or category theory
+or category theory\footnote{\url{https://en.wikipedia.org/wiki/Category_theory}}
 or that the reader is familiar with specific mathematical symbols
 that have been used in previous papers on the subject.
 Thorough explanations are preferred over terse explanations.
-
-This book starts with a thorough explanation of data because
-a good understanding of parsing rests on a good
-understanding of data, which is what a parser acts upon.
 
 This document is licensed under the Creative
 Commons Zero v1.0 Universal 
@@ -272,9 +267,7 @@ bear with us if it seems like we are just defining words for no apparent
 reason.
 
 \section*{Prerequisites}
-For the chapters on data, the reader should have a basic knowledge of
-computers, such as knowing about a monitor, mouse, disk, file, and an
-application.
+A knowledge of programming concepts is required.
 
 % Four-level Table of Contents
 \setcounter{tocdepth}{4}
@@ -297,11 +290,13 @@ application.
 
 % 0000000100000000020000000003000000000400000000050000000006000000000700000000008
 \section{Grammars}
+context-free grammars are an ideal.
 
-\subsection{Terminals and Tokens}
-Terminals are typically referred to as tokens in practice. Technically, a
-terminal is just a language element, while a token typically contains
-additional information about the context in which the element was recognized.
+\url{https://tratt.net/laurie/blog/entries/parsing_the_solved_problem_that_isnt.html}
+
+\subsection{Terminals}
+A terminal is an atomic element of a language.
+
 
 \subsection{Nonterminals}
 Nonterminals are often referred to as variables.
@@ -309,6 +304,22 @@ Nonterminals are often referred to as variables.
 \subsection{Productions}
 A production is a rule that map a nonterminal 
 to a sequence of terminals.
+
+\section{Tokens and their Sub-Grammars}
+Terminals are typically referred to as tokens in practice. Technically, a
+terminal is just a language element, while a token typically contains
+additional information about the context in which the element was recognized.
+
+Tokens are typically defined by their own grammar based on regular expressions.
+This grammar is typically separate from the language grammar.
+
+\url{http://savage.net.au/Ron/html/graphviz2.marpa/Lexing.and.Parsing.Overview.html#Grammars_and_Sub-grammars}
+
+Modern parsing system are supporting Unicode with increasing frequency.
+Unicode is its own subgrammar.
+
+Therefore, it is likely that there will be three layers of grammar involved
+in defining a language.
 
 \section{Parse Trees}
 
@@ -338,10 +349,12 @@ for children of a previously parsed node.
 \subsection{Incremental Parsing}
 Parse trees are needed for incremental parsing:
 \begin{verbatim}
-reparse(old_parse_tree, text_delta)
+new_parse_tree = reparse(old_parse_tree, text_delta)
 \end{verbatim}
 \url{https://channel9.msdn.com/Blogs/Seth-Juarez/Anders-Hejlsberg-on-Modern-Compiler-Construction}
 
+\subsection{Language Servers}
+\url{https://microsoft.github.io/language-server-protocol/}
 
 \section{Parsing Applications}
 There are important differences between parsing 
@@ -354,15 +367,21 @@ There are handwritten and generated parsers.
 
 \section{The Role of the Lexer}
 
-Lexemes and Tokens\\
+Lexemes and Tokens
 
-Why do lexing independently from parsing?
+Why perform lexing independently from parsing?
 
 Wirth, in Compiler Construction, states
 
 "A partitioning of the compilation process into as many parts as possible was the predominant
 technique until about 1980, because until then the available store was too small to
-accommodate the entire compiler"
+accommodate the entire compiler"\\
+
+
+
+"The design decision to decouple the lexer and parser has existed since at least Antlr 2 and likely made for separation of concerns and performance reasons. Where the lexer is driven by the parser, the lexer may have to re-lex portions of the input text many times in different contexts before the parser is able to satisfy a rule. The Antlr lexer does everything it can, and largely succeeds, in processing the entire input text in a single pass. Just different approaches taken with the same good intentions."
+\url{https://stackoverflow.com/questions/28873463/no-context-sensitivity-in-antlr4}\\
+
 
 A pipeline supports separation of concerns and allows reuse of a lexer
 with other parsers that accept a stream of tokens.
@@ -383,39 +402,57 @@ scanner to process the input data.
 
 \subsection{Scannerless Parsing}
 
-The concept of \newterm{scannerless parsing}{Scannerless Parsing} was formalized
-by Salomon and Cormack in "Scannerless nslr(1) parsing of programming languages" July 1989
+The concept of \newterm{scannerless parsing}{Scannerless Parsing} was 
+explored thoroughly by Salomon and Cormack in 
+"Scannerless nslr(1) parsing of programming languages" July 1989
 It may not be immediately clear why simply \textit{not} using a scanner
 is an idea being discussed in the year 1989. If you read Knuth's 1965 paper on
 LR parsing, there is no mention of scanning. One would presume that the lack
-of a scanner was a normal thing. When Knuth discusses parsing a string such 
-as $abcde$ it his paper, he presumes each of those letters is a separate 
-terminal. Apparently, there is no scanner. But strictly speaking, his 
+of a scanner was a normal thing. But strictly speaking, his 
 paper was simply agnostic about the nature of the 
-terminals such as how they were created or whether they "contain" information
-or structure, such as a sequence of characters. The parsing process
+terminals. The parsing process
 he describes presumes the input string is composed of a pure sequence 
-of atomic elements.
+of atomic elements. There is no further discussion on the possible
+structure or origin of those elements.
 
-In practice, however, a scanner was typically used because it
+In practice, however, a scanner is typically used because it
 allows the resulting grammar to be much simpler than a grammar
 in which every character is a terminal. A simpler grammar can
-be parsed with a simpler parser, which is an essential benefit
+often be parsed with a simpler parser, which is an essential benefit
 of using a scanner.
+
+Explains the scanner is just an optimized parser:
+\url{https://softwareengineering.stackexchange.com/questions/337676/what-is-the-procedure-that-is-followed-when-writing-a-lexer-based-upon-a-grammar}
+
+Explains that scannerless parsing doesn't have all the cool regex features like negation:
+\url{https://github.com/antlr/antlr4/issues/1527} Please, remove lexer from Antlr
 
 \section{Scanning}
 
 \subsection{Input Data}
 
 \subsection{Rules for Tokens}
-
+                      
 \subsection{Literals}
 
 \subsection{Regular Expressions}
 
+\url{https://regex101.com/}
+\url{https://news.ycombinator.com/item?id=23975041}
+
+Using capture groups for acceptance allows non-captured expressions to indicate negation:
+\url{http://www.rexegg.com/regex-best-trick.html}
+
+\subsubsection{Regex DoS}
+
+\url{https://levelup.gitconnected.com/the-regular-expression-denial-of-service-redos-cheat-sheet-a78d0ed7d865}
+\url{https://blog.cloudflare.com/details-of-the-cloudflare-outage-on-july-2-2019/}
+
 \subsection{Pseudo-Tokens}
 
 \subsection{Context-Free and Context-Aware Scanning}
+references: \url{https://www.umsec.umn.edu/publications/Context-Aware-Scanning-Parsing-Extensible}
+\url{http://tree-sitter.github.io/tree-sitter/creating-parsers#lexical-analysis}
 
 
 \section{Scanner Conflicts}
@@ -484,17 +521,22 @@ Assuming you are using traditional scanning software,
 a strategy for handling longest match conflicts, 
 which makes the grammar less portable between various parsing tools.
 
-\subsection{Context-Invasive Token Conflicts}
+\subsection{Context-Invasive Lexical Conflicts}
 A scanner conflict that only occurs because a
 token is active that is not associated with the
 current parsing context is given the name
 \newterm{context-invasive conflict}{Context-invasive Token Conflict}
 in this book.
 
+\subsubsection{An Example of an Invasive Conflict}
+
+
 \subsection{Resolving Lexical Conflicts}
 \subsubsection{Lexical Modes}
 Lexical modes are a tool for resolving lexical conflicts
 by creating separate sets of active tokens.
+
+\url{https://github.com/antlr/antlr4/blob/master/doc/lexer-rules.md#lexical-modes}
 
 \subsubsection{Lexical Lookahead Operator}
 A lexical lookahead operator can specify a required
@@ -510,18 +552,20 @@ to determine whether to match the token.
 
 \subsection{Academic History of Token Conflicts}
 
+\subsubsection{Nawrocki}
 Token conflicts were first formalized by Nawrocki in 1991.
 
+\subsubsection{Keynes}
 
-Keynes:\\
-
+The thick dot in some of his definitions are used two
+different ways:\\
 universal quantified predicate (text p. 5, pdf p. 11)\\
 \url{http://www.open-std.org/jtc1/sc22/open/n3187.pdf}\\
 
 set comprehension term p. 20\\
 \url{https://www.cs.ox.ac.uk/files/3389/PRG68.pdf}\\
 
-Denny
+\subsubsection{Denny}
 
 
 
@@ -538,19 +582,54 @@ Denny
 
 \section{Top-down Parsing}
 This produces a left-most derivation.
+Top down mimics walking hierarchical data.
+
+\subsection{Predicitive Parsing}
+\url{https://www.tutorialspoint.com/compiler_design/compiler_design_top_down_parser.htm}
 
 \section{Bottom-up Parsing}
 This produces a right-most derivation.
-
+But LR might be able to produce LL (top-down) output: 
+\url{https://cs.stackexchange.com/a/69996}
 
 \section{Parsing Families}
+"The primary difference between how LL and LR parsers operate is that an LL parser outputs a pre-order traversal of the parse tree and an LR parser outputs a post-order traversal."\\
+\url{http://blog.reverberate.org/2013/07/ll-and-lr-parsing-demystified.html}
+
+\vspace{10pt}
+
+\url{http://blog.reverberate.org/2013/09/ll-and-lr-in-context-why-parsing-tools.html}
+
+\vspace{10pt}
+
+\url{https://stackoverflow.com/questions/5975741/what-is-the-difference-between-ll-and-lr-parsing}
+
+\vspace{10pt}
+
+\url{https://web.stanford.edu/class/archive/cs/cs143/cs143.1128/handouts/100%20Bottom-Up%20Parsing.pdf}
+
+\vspace{10pt}
+
+On why OCYacc generates a full LR(1) state machine:
+"The reason for this is that, in todays' computing environment, it may not necessarily be desirable to reduce
+the number of states in order to save space in the parsing tables."\\
+\url{https://chaosinmotiondotblog.files.wordpress.com/2017/08/ocyacc-building-lr1-glr.pdf}
+
 
 \section{The LL Parsing Family}
 \section{The LR Parsing Family}
+LR is particularly difficult to implement manually.
+
 \section{CYK Parsing}
+
 \section{Early Parsing}
+
 \section{PEG Parsing}
+Parser Expression Grammars (PEGs) are a bit of a mix
+    Using syntactic predicates can preclude using an lr or ll parser because of unbounded lookahead
+
 \section{Parser Combinators}
+"Efficient Parsing with parsing combinators" J Kurs et al.
 
 
 % 0000000100000000020000000003000000000400000000050000000006000000000700000000008
@@ -560,8 +639,20 @@ This produces a right-most derivation.
 \chapter{LL Parsing}
 \section{LL Table Structure}
 \section{LL Table Building}
-\section{ALL Parsing}
+
+\section{LL(1) Parsing}
+
+\section{LL(k) Parsing}
+
 \section{GLL Parsing}
+Afroozeh A., Izmaylova A. (2015) Faster, Practical GLL Parsing. In: Franke B. (eds) Compiler Construction. CC 2015. Lecture Notes in Computer Science, vol 9031. Springer, Berlin, Heidelberg
+
+\section{LL(*) Parsing}
+The parsing algorithm of ANTLR3.
+
+\section{ALL(*) Parsing}
+The parsing algorithm of ANTLR4.
+\url{https://www.antlr.org/papers/allstar-techreport.pdf}
 
 
 % 0000000100000000020000000003000000000400000000050000000006000000000700000000008
@@ -586,10 +677,41 @@ when an LR table challenged memory resources of a
 typical computer. The difference now, between 100K and 1M
 is not much. In the 1980's, that could have meant much more.
 
+On why OCYacc generates a full LR(1) state machine:
+"The reason for this is that, in todays' computing environment, it may not necessarily be desirable to reduce
+the number of states in order to save space in the parsing tables."\\
+\url{https://chaosinmotiondotblog.files.wordpress.com/2017/08/ocyacc-building-lr1-glr.pdf}
 
 \section{LALR Parsing}
+LALR is an optimization for reducing the size of the Canonical LR
+tables by having certain similar states share the entry in the
+parsing tables.
+However, some languages that are correctly parsed by CLR
+are not parsed correctly with the smaller LALR table. Therefore,
+LALR is considered less powerful than CLR. 
+
 \section{Minimal LR Parsing}
+It has been shown that there is a relatively simple
+method to determine which set of LR(1) states might cause 
+a conflict if they share the same table entry.
+
+A \newterm{Minimal LR Parser}{Minimal LR Parser}
+only merges the states that are safe to merge.  
+If the language requires separate states that
+LR(1) supports then those states will be left unmerged, but 
+if the language is simpler and merging states does not create
+a conflict, then the states are merged.
+In this way, the parsing table is roughly sized according to the needs of
+the language.
+
+This begs the question, why hasn't Minimal LR parsing been
+more popular?
+
+\url{https://stackoverflow.com/a/42915777}
+
 \section{GLR Parsing}
+Ambiguity can be a PITA. Multiple parse trees are difficult to deal with.
+Tree-sitter uses GLR.
 
 % 0000000100000000020000000003000000000400000000050000000006000000000700000000008
 %
@@ -598,11 +720,18 @@ is not much. In the 1980's, that could have meant much more.
 \chapter{Indentation-Sensitive Parsing}
 
 \section{Indentation-Sensitive Languages}
+
+Indented Languages are not described by Context-Free Grammars
+
 Python, YAML, and Haskell are indentation sensitive.
+
+\url{http://trevorjim.com/parsing-not-solved/}
+\url{http://trevorjim.com/python-is-not-context-free/}
 
 \section{Parsing Indented Blocks}
 \subsection{Grammar Annotations}
 
+% 0000000100000000020000000003000000000400000000050000000006000000000700000000008
 \subsubsection{Grammar terms annotated with Counts}
 Indentation Sensitive Languages\\
 2006 Leonhard Brunauer, Bernhard Muhlbacher\\
@@ -642,20 +771,90 @@ Erdweg S., Rendel T., Kästner C., Ostermann K. (2013) Layout-Sensitive Generali
 \subsubsection{Data-Dependent Grammars}
 Ch. 3: "In this chapter we propose a parsing framework that embraces context information in its core."\\
 \url{https://homepages.cwi.nl/~jurgenv/papers/PhDThesis_Ali_Afroozeh_and_Anastasia_Izmaylova.pdf}\\
+
+\vspace{10pt}
+
+Section 3.1:
+\par Decls ::= \textbf{align} (\textbf{offside} Decl)*
+\par \:\:\:\: $\vert$ \textbf{ignore}('\{' Decl(';' Decl)* '\}')
+
+This definition clearly and concisely specifies that either all declarations in the list are
+aligned, and each Decl is offsided with regard to its first token (first alternative), or
+indentation is ignored inside curly braces (second alternative).
+
 align and offside keywords desugared to data-dependent expressions (section 3.3.5)
 
 \subsection{PEG Semantic Predicates}
 \url{https://gist.github.com/dmajda/04002578dd41ae8190fc}\\
-Note that the 'I' provides an explicit token indicating that indentation is coming so this doesn't really work
+Note that the 'I' provides an explicit token indicating that
+indentation is coming so this doesn't really work
 for arbitrary indentation like YAML.
 
 \subsection{Pseudo-Tokens and Pseudo-Grammars}
-\subsubsection{Implicit Current Indentation}
+
+\subsubsection{Indented Blocks}
+INDENT means match pending spacing more than last indent
+and increases the indent level by one.
+\begin{verbatim}
+indents.push(new_indent))
+\end{verbatim}
+
+DEDENT means pending spacing less than last indent.
+DEDENT represents the reduction of one 
+level of current indentation. Multiple DEDENTs
+may appear in sequence.
+\begin{verbatim}
+indents.pop()
+\end{verbatim}
+*consumes no input*
+
+Parsing indentation requires context aware lexing.
+Otherwise, a dedent would always be active.
+Also, verbatim text would need a way to actively turn
+off the indentation tokenization somehow.
+
 \subsubsection{Explicit Current Indentation}
+SAMEDENT means match pending spaces equal to last indent.\\
+Prior Work:\\
+\url{https://stackoverflow.com/questions/11659095/parse-indentation-level-with-peg-js}
+
+Implementation strategy:\\
+If you use SAMEDENT and the parser has an adaptive lexer, 
+you can limit indentation logic to just the tokenizing
+of specific tokens (INDENT/SAMEDENT/DEDENT) only when they
+are active. If you wanted to combine a grammar with
+indent tokens with a grammar without indent tokens
+(as a sublanguage for example), then it makes the lexer
+easier if it knows, explicitly, when indentation is relevant,
+which makes it easier to write.
+
+\subsubsection{Implicit Current Indentation}
+Same indentation is implied in the grammar, 
+I.E. indent checking is always on.
+\url{https://docs.python.org/3/reference/grammar.html}
+\begin{verbatim}
+suite: simple_stmt | NEWLINE INDENT stmt+ DEDENT
+\end{verbatim}
+note that stmt does not refer to indentation (no SAMEDENT)
+
+% 0000000100000000020000000003000000000400000000050000000006000000000700000000008
+If you can't use SAMEDENT because the tokenizor cannot (or it's too difficult to)
+keep enough context, then indentation logic will need to be pervasive across the
+tokenizer, activating after every newline. if you need to suspend indentation, 
+you'll need to program that into the tokenizer for that situation (opt-out)
 
 \section{Parsing Flow-Style Lists}
 
+\subsection{Grammar}
+First field needs to be defined differently (without samedent) than remaining fields
+\begin{verbatim}
+MARK_INDENT means indents.push(cur col), consume no input
+\end{verbatim}
+Use MARK\_INDENT after LIST\_SEPARATOR
+
 \section{Parsing Blank Lines in Indented Blocks}
+We need to swap tokens. Adding psuedo tokens is not helpful.
+Stream based token swapping solves this.
 
 
 
@@ -668,9 +867,57 @@ You can hand write a parser or use a parser generator to automatically
 generate a parser
 PEG is typically partially handwritten and partially generated.
 
+\begin{itemize}
+    \item Prototype with custom tokenizer
+    \item LR(1) Grammar with no token conflicts
+    \item Validate with various Parser Generators
+    \item Rewrite as top down
+    \item Fuzz test for both, validating equivalency
+\end{itemize}
+
+
 \section{Handwritten Parsers}
 
 \section{Parser Generators}
+Reality of Parser Generators
+\begin{itemize}
+    \item 
+    Limited language support
+        Not necessarily an issue if you are just trying to prove out your grammar
+    \item 
+    Multiple approaches to grammar syntax and expressibility
+    \item 
+    No standard lexing strategy
+    \item 
+    No standard parse trees or eventing (sax)
+    \item 
+    No standard code integration strategy with the grammar (see PEG.js example for indents)
+    \item 
+    So many to evaluate
+\end{itemize}
+
+Selected Parser Generators
+\begin{itemize}
+    \item LALR Parsing
+    \begin{itemize}
+        \item Flex/Bison
+        \item Jison
+    \end{itemize}
+    \item ALL Parsing
+    \begin{itemize}
+        \item ANTLR4
+    \end{itemize}
+    \item GLR
+    \begin{itemize}
+        \item Tree-Sitter
+    \end{itemize}
+    \item PEG
+    \begin{itemize}
+        \item PEG.js
+    \end{itemize}
+\end{itemize}
+
+
 
 
 % 0000000100000000020000000003000000000400000000050000000006000000000700000000008
@@ -680,6 +927,23 @@ PEG is typically partially handwritten and partially generated.
 \chapter{A Model Data Parser}
 
 \section{Design Choices}
+\begin{itemize}
+\item
+Grammar driven dynamic Lexing
+\item
+Token-specific custom lexing
+\item
+Emit multiple tokens per scan
+\item
+Minimal LR(1) Parsing
+\item
+Layered Grammar
+\begin{itemize}
+    \item map: map-text
+    \item list: list-text
+\end{itemize}
+\end{itemize}
+
 
 \appendix
 
@@ -908,14 +1172,6 @@ convenient because you can always represent one byte with only two digits.
 
 
 % 0000000100000000020000000003000000000400000000050000000006000000000700000000008
-\subsection{Exercises for Section \ref{bindata}}\label{ex.bindata}
-
-\noindent\textbf{Exercise \ref{ex.bindata}.1}: Write the numbers 8 through 15
-using 4 bits.
-
-\medskip\noindent
-\textbf{Exercise \ref{ex.bindata}.2}: Create a mapping from the numbers 0
-through 8 to two digits of the three symbols 0, 1, and 2.
 
 \section{Character Encodings}
 Characters are symbols that represent sounds or parts of words.
@@ -953,3 +1209,4 @@ Unicode Standard.
 \addcontentsline{toc}{chapter}{Index}
 \printindex
 \end{document}
+
